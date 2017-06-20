@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+#encoding: utf-8
+
+require "excel_diff"
+
+case ARGV.size
+when 0, 1
+  puts '比較するファイル名を指定してください。'
+  puts '$ ruby excel-diff.rb [file2] [file2]'
+  exit
+when 2
+  excel1 = ExcelDiff.excel_parse(ARGV[0])
+  excel2 = ExcelDiff.excel_parse(ARGV[1])
+
+  sheets_size = [excel1.sheets.size, excel2.sheets.size].min
+
+  sheets_size.times do |nsheet|
+    ExcelDiff.sheet_diff(excel1, excel2, nsheet)
+    # ExcelDiff.sheet_diff(excel1, excel2, nsheet, using: 'diffy')
+  end
+when 3
+  excel1 = ExcelDiff.excel_parse(ARGV[0])
+  excel2 = ExcelDiff.excel_parse(ARGV[1])
+
+  ExcelDiff.sheet_diff(excel1, excel2, ARGV[2])
+  # ExcelDiff.sheet_diff(excel1, excel2, ARGV[2], using: 'diffy')
+else
+  puts '引数が多すぎます。'
+end
