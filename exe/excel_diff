@@ -2,28 +2,35 @@
 #encoding: utf-8
 
 require "excel_diff"
+require "optparse"
+
+opt = OptionParser.new
+options = {}
+
+opt.on('-n num', Integer) { |v| options[:n] = v }
+
+opt.parse!(ARGV)
 
 case ARGV.size
 when 0, 1
   puts '比較するファイル名を指定してください。'
-  puts '$ ruby excel-diff.rb [file2] [file2]'
+  puts '$ ruby excel-diff.rb file1 file2 [-n num]'
   exit
 when 2
   excel1 = ExcelDiff.excel_parse(ARGV[0])
   excel2 = ExcelDiff.excel_parse(ARGV[1])
 
-  sheets_size = [excel1.sheets.size, excel2.sheets.size].min
+  if options[:n].nil?
+    sheets_size = [excel1.sheets.size, excel2.sheets.size].min
 
-  sheets_size.times do |nsheet|
-    ExcelDiff.sheet_diff(excel1, excel2, nsheet)
-    # ExcelDiff.sheet_diff(excel1, excel2, nsheet, using: 'diffy')
+    sheets_size.times do |nsheet|
+      ExcelDiff.sheet_diff(excel1, excel2, nsheet)
+      # ExcelDiff.sheet_diff(excel1, excel2, nsheet, using: 'diffy')
+    end
+  else
+    ExcelDiff.sheet_diff(excel1, excel2, options[:n])
+    # ExcelDiff.sheet_diff(excel1, excel2, options[:n], using: 'diffy')
   end
-when 3
-  excel1 = ExcelDiff.excel_parse(ARGV[0])
-  excel2 = ExcelDiff.excel_parse(ARGV[1])
-
-  ExcelDiff.sheet_diff(excel1, excel2, ARGV[2])
-  # ExcelDiff.sheet_diff(excel1, excel2, ARGV[2], using: 'diffy')
 else
   puts '引数が多すぎます。'
 end
