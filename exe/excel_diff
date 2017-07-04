@@ -14,7 +14,7 @@ opt.parse!(ARGV)
 case ARGV.size
 when 0, 1
   puts '比較するファイル名を指定してください。'
-  puts '$ ruby excel-diff.rb file1 file2 [-n num]'
+  puts '$ excel_diff file1 file2 [-n num]'
   exit
 when 2
   excel1 = ExcelDiff.excel_parse(ARGV[0])

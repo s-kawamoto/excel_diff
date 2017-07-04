@@ -6,4 +6,7 @@ require "excel_git_diff"
 case ARGV.size
 when 1
   ExcelGitDiff.excel_git_diff(ARGV[0])
+else
+  puts '引数を確認してください'
+  puts '$ excel_git_diff file'
 end
