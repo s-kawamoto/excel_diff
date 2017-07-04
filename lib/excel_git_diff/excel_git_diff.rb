@@ -35,7 +35,6 @@ module ExcelGitDiff
   def get_excel_commit_at(commit_id, file, diff_file_path)
     FileUtils.mkdir_p( File.dirname(diff_file_path) )
 
-    system("echo \"git show #{commit_id}:#{file} > #{diff_file_path}\"")
     system("git show #{commit_id}:#{file} > #{diff_file_path}")
   end
 end
