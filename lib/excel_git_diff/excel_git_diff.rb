@@ -19,12 +19,19 @@ module ExcelGitDiff
 
     min_size = [excel1.sheets.size, excel2.sheets.size].min
     max_size = [excel1.sheets.size, excel2.sheets.size].max
+    if excel2.sheets.size > excel1.sheets.size
+      sheet_add = true
+    end
     max_size.times do |nsheet|
       case nsheet
       when 0...min_size
         ExcelDiff.sheet_diff(excel1, excel2, nsheet)
       when min_size..max_size
-        puts "sheet #{excel2.sheets[nsheet]} add"
+        if sheet_add
+          puts "sheet #{excel2.sheets[nsheet]} add"
+        else
+          puts "sheet #{excel1.sheets[nsheet]} delete"
+        end
       end
     end
 
