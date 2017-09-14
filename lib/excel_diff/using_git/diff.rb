@@ -29,7 +29,6 @@ module ExcelDiff
       end
 
       File.delete(diff_file_path)
-      Dir.rmdir(File.dirname(diff_file_path))
     end
   end
 end

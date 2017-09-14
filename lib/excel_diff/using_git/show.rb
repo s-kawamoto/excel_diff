@@ -46,7 +46,6 @@ module ExcelDiff
       files.each do |f|
         File.delete(f)
       end
-      Dir.rmdir(File.dirname(files[0]))
     end
   end
 end
