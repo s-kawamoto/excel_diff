@@ -22,8 +22,8 @@ module ExcelDiff
 
       system("git log #{commit_id} -n 1")
 
-      excel1 = ExcelDiff.excel_parse(files[0])
-      excel2 = ExcelDiff.excel_parse(files[1])
+      excel1 = ExcelDiff.excel_parse(files[1])
+      excel2 = ExcelDiff.excel_parse(files[0])
 
       min_size = [excel1.sheets.size, excel2.sheets.size].min
       max_size = [excel1.sheets.size, excel2.sheets.size].max
