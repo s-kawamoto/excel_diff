@@ -5,7 +5,7 @@ module ExcelDiff
     def show(file, commit_id = "")
       commit_id = `git log -n 1 --format=%H`.chomp if commit_id.empty?
 
-      commit_ids = `git log #{commit_id} -n 2 --format=%H`.split
+      commit_ids = `git log #{commit_id} -n 2 --format=%H`.split.reverse!
 
       if commit_ids.size == 1
         puts "first commit"
@@ -22,8 +22,8 @@ module ExcelDiff
 
       system("git log #{commit_id} -n 1")
 
-      excel1 = ExcelDiff.excel_parse(files[1])
-      excel2 = ExcelDiff.excel_parse(files[0])
+      excel1 = ExcelDiff.excel_parse(files[0])
+      excel2 = ExcelDiff.excel_parse(files[1])
 
       min_size = [excel1.sheets.size, excel2.sheets.size].min
       max_size = [excel1.sheets.size, excel2.sheets.size].max
