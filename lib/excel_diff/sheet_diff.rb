@@ -5,11 +5,12 @@ require "diffy"
 module ExcelDiff
   module_function
 
-  def sheet_diff(excel1, excel2, nsheet, using: 'linux')
+  def sheet_diff(excel1, excel2, nsheet, n2: nil, using: 'linux')
 
-    unless nsheet.nil?
+    if nsheet
       excel1.default_sheet = excel1.sheets[nsheet.to_i]
-      excel2.default_sheet = excel2.sheets[nsheet.to_i]
+      nsheet2 = (n2 || nsheet)
+      excel2.default_sheet = excel2.sheets[nsheet2.to_i]
     end
 
     csv1 = excel1.to_csv
@@ -27,7 +28,7 @@ module ExcelDiff
         f.print csv1
       end
 
-      tmp2 = File.join(tmp_dir, "tmp2sheet#{nsheet}.csv")
+      tmp2 = File.join(tmp_dir, "tmp2sheet#{nsheet2}.csv")
       File.open(tmp2, 'w') do |f|
         f.puts csv2
       end

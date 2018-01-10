@@ -8,8 +8,11 @@ opt = OptionParser.new
 options = {}
 
 opt.on('-n num', Integer) { |v| options[:n] = v }
+opt.on('-m num2', Integer) { |v| options[:n2] = v }
 
 opt.parse!(ARGV)
+p options
+p ARGV
 
 case ARGV.size
 when 0, 1
@@ -28,7 +31,7 @@ when 2
       # ExcelDiff.sheet_diff(excel1, excel2, nsheet, using: 'diffy')
     end
   else
-    ExcelDiff.sheet_diff(excel1, excel2, options[:n])
+    ExcelDiff.sheet_diff(excel1, excel2, options[:n], n2: options[:n2])
     # ExcelDiff.sheet_diff(excel1, excel2, options[:n], using: 'diffy')
   end
 else
