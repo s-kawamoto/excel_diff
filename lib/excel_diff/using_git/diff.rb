@@ -3,6 +3,8 @@ module ExcelDiff
     module_function
 
     def diff(file)
+      status = true
+
       commit_id = `git log -n 1 --format=%H`.chomp
 
       diff_file_path = ExcelDiff::UsingGit::Common.get_excel_commit_at(commit_id, file)
@@ -18,8 +20,10 @@ module ExcelDiff
       max_size.times do |nsheet|
         case nsheet
         when 0...min_size
-          ExcelDiff.sheet_diff(excel1, excel2, nsheet)
+          status &&= ExcelDiff.sheet_diff(excel1, excel2, nsheet)
         when min_size..max_size
+          status = false
+
           if sheet_add
             puts "sheet #{excel2.sheets[nsheet]} add"
           else
@@ -29,6 +33,8 @@ module ExcelDiff
       end
 
       File.delete(diff_file_path)
+
+      status
     end
   end
 end

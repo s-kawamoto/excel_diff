@@ -20,6 +20,8 @@ when 0, 1
   puts '$ excel_diff file1 file2 [-n num]'
   exit
 when 2
+  status = true
+
   excel1 = ExcelDiff.excel_parse(ARGV[0])
   excel2 = ExcelDiff.excel_parse(ARGV[1])
 
@@ -27,13 +29,15 @@ when 2
     sheets_size = [excel1.sheets.size, excel2.sheets.size].min
 
     sheets_size.times do |nsheet|
-      ExcelDiff.sheet_diff(excel1, excel2, nsheet)
+      status &&= ExcelDiff.sheet_diff(excel1, excel2, nsheet)
       # ExcelDiff.sheet_diff(excel1, excel2, nsheet, using: 'diffy')
     end
   else
-    ExcelDiff.sheet_diff(excel1, excel2, options[:n], n2: options[:n2])
+    status &&= ExcelDiff.sheet_diff(excel1, excel2, options[:n], n2: options[:n2])
     # ExcelDiff.sheet_diff(excel1, excel2, options[:n], using: 'diffy')
   end
+
+  exit(1) unless status
 else
   puts '引数が多すぎます。'
 end

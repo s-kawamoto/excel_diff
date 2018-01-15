@@ -33,7 +33,7 @@ module ExcelDiff
         f.puts csv2
       end
 
-      system("diff -u #{tmp1} #{tmp2}")
+      status = system("diff -u #{tmp1} #{tmp2}")
       File.delete(tmp1, tmp2)
       Dir.rmdir(tmp_dir)
 
@@ -43,5 +43,7 @@ module ExcelDiff
     else
       raise 'diffを選択してください。'
     end
+
+    status
   end
 end
