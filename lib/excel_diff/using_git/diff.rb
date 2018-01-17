@@ -20,7 +20,8 @@ module ExcelDiff
       max_size.times do |nsheet|
         case nsheet
         when 0...min_size
-          status &&= ExcelDiff.sheet_diff(excel1, excel2, nsheet)
+          result = ExcelDiff.sheet_diff(excel1, excel2, nsheet)
+          status &&= result
         when min_size..max_size
           status = false
 

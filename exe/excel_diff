@@ -29,11 +29,12 @@ when 2
     sheets_size = [excel1.sheets.size, excel2.sheets.size].min
 
     sheets_size.times do |nsheet|
-      status &&= ExcelDiff.sheet_diff(excel1, excel2, nsheet)
+      result = ExcelDiff.sheet_diff(excel1, excel2, nsheet)
+      status &&= result
       # ExcelDiff.sheet_diff(excel1, excel2, nsheet, using: 'diffy')
     end
   else
-    status &&= ExcelDiff.sheet_diff(excel1, excel2, options[:n], n2: options[:n2])
+    status = ExcelDiff.sheet_diff(excel1, excel2, options[:n], n2: options[:n2])
     # ExcelDiff.sheet_diff(excel1, excel2, options[:n], using: 'diffy')
   end
 
