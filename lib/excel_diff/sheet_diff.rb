@@ -46,4 +46,31 @@ module ExcelDiff
 
     status
   end
+
+  def all_sheet_diff(excel1, excel2, using: 'linux')
+    status = true
+
+    min_size = [excel1.sheets.size, excel2.sheets.size].min
+    max_size = [excel1.sheets.size, excel2.sheets.size].max
+
+    sheet_add = true if excel2.sheets.size > excel1.sheets.size
+
+    max_size.times do |nsheet|
+      case nsheet
+      when 0...min_size
+        result = ExcelDiff.sheet_diff(excel1, excel2, nsheet, using: using)
+        status &&= result
+      when min_size..max_size
+        status = false
+
+        if sheet_add
+          puts "sheet #{excel2.sheets[nsheet]} add"
+        else
+          puts "sheet #{excel1.sheets[nsheet]} delete"
+        end
+      end
+    end
+
+    status
+  end
 end

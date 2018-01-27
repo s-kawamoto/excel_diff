@@ -5,9 +5,9 @@ require "excel_diff"
 
 case ARGV.size
 when 2
-  ExcelDiff::UsingGit.show(ARGV[0], ARGV[1])
+  exit(1) unless ExcelDiff::UsingGit.show(ARGV[0], ARGV[1])
 when 1
-  ExcelDiff::UsingGit.show(ARGV[0])
+  exit(1) unless ExcelDiff::UsingGit.show(ARGV[0])
 else
   puts '引数を確認してください'
   puts '$ excel_git_diff file'
