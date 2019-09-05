@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "excel_diff"
   spec.version       = ExcelDiff::VERSION
   spec.authors       = ["s-kawamoto"]
-  spec.email         = ["s.kwmot@gmail.com"]
+  spec.email         = ["s.kawamoto.contact@gmail.com"]
 
   spec.summary       = %q{}
   spec.description   = %q{}
